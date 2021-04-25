@@ -28,7 +28,7 @@ const componentStyles = (theme) => ({
     marginLeft: "1rem",
   },
   searchInput: {
-    color: theme.palette.adminNavbarSearch.main,
+    color: theme.palette.black.main,
     width: "270px",
     backgroundColor: "initial",
     border: 0,

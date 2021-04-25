@@ -32,18 +32,18 @@ const componentStyles = (theme) => ({
   },
   ptMd4: {
     [theme.breakpoints.up("sm")]: {
-      paddingTop: "1.5rem!important",
+      paddingTop: "0.5rem!important",
     },
   },
   mtMd5: {
     [theme.breakpoints.up("sm")]: {
-      paddingTop: "3rem!important",
+      paddingTop: "0rem!important",
     },
   },
   cardHeaderRootProfile: {
     [theme.breakpoints.up("sm")]: {
-      paddingBottom: "1.5rem!important",
-      paddingTop: "1.5rem!important",
+      paddingBottom: "0rem!important",
+      paddingTop: "0rem!important",
     },
   },
   buttonRootInfo: {

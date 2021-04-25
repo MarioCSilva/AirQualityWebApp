@@ -1,5 +1,6 @@
 // core components
 import Dashboard from "views/admin/Dashboard.js";
+import SearchAirQuality from "views/admin/SearchAirQuality.js";
 import Icons from "views/admin/Icons.js";
 import Login from "views/auth/Login.js";
 import Maps from "views/admin/Maps.js";
@@ -17,6 +18,7 @@ import Palette from "@material-ui/icons/Palette";
 import Person from "@material-ui/icons/Person";
 import Tv from "@material-ui/icons/Tv";
 import VpnKey from "@material-ui/icons/VpnKey";
+import AirQuality from '@material-ui/icons/LocalHospitalRounded';
 
 var routes = [
   {
@@ -24,6 +26,14 @@ var routes = [
     name: "Upgrade to pro",
     icon: FlashOn,
     upgradeToPro: true,
+  },
+  {
+    path: "/search",
+    name: "AirQuality",
+    icon: AirQuality,
+    iconColor: "Primary",
+    component: SearchAirQuality,
+    layout: "/admin",
   },
   {
     path: "/index",
