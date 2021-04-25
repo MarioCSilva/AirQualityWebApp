@@ -16,15 +16,12 @@ jobs:
       - checkout
       # Use mvn clean and package as the standard maven build phase
       - run:
-          name: Change Dir
-          command: cd backend-spring-boot/air-quality
-      - run:
           name: Build
-          command: mvn -B -DskipTests clean package
+          command: cd backend-spring-boot/air-quality && mvn -B -DskipTests clean package
       # Then run your tests!
       - run:
           name: Test
-          command: mvn test
+          command: cd backend-spring-boot/air-quality && mvn test
 
 workflows:
   # Below is the definition of your workflow.
