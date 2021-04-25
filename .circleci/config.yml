@@ -18,6 +18,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install
+          command: cd ./frontend-react && npm clean install
+      - run:
           name: Test
           command: cd ./frontend-react && npm run build
 
