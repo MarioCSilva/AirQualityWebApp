@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@4.3.0
+  node: circleci/node@3.0.0
 jobs:
   build-and-test:  
     docker:
@@ -13,19 +13,19 @@ jobs:
       - run:
           name: Test
           command: cd ./backend-spring-boot/air-quality && mvn test
-  build-node:
-    executor: node/default
+  install-build-node:
+    docker:
+      - image: 'cimg/base:stable'
     steps:
       - checkout
-      - run:
-          name: Install
-          command: cd ./frontend-react && npm clean install
-      - run:
-          name: Test
-          command: cd ./frontend-react && npm run build
+      - node/install:
+          install-yarn: true
+          node-version: latest
+      - run: cd ./frontend-react && npm ci
+      - run: cd ./frontend-react && npm run build
 
 workflows:
   sample: 
     jobs:
       - build-and-test
-      - build-node
+      - install-build-node
