@@ -9,6 +9,7 @@ jobs:
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # Be sure to update the docker image tag below to openjdk version of your application.
     # A list of available CircleCI docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/openjdk
+    working_directory: ~/backend-spring-boot/air-quality
     docker:
       - image: cimg/openjdk:11.0
     steps:
@@ -17,11 +18,11 @@ jobs:
       # Use mvn clean and package as the standard maven build phase
       - run:
           name: Build
-          command: cd backend-spring-boot/air-quality && mvn -B -DskipTests clean package
+          command: mvn -B -DskipTests clean package
       # Then run your tests!
       - run:
           name: Test
-          command: cd backend-spring-boot/air-quality && mvn test
+          command: mvn test
 
 workflows:
   # Below is the definition of your workflow.
