@@ -5,12 +5,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import tqs.airquality.cache.AirQualityCache;
+import tqs.airquality.model.CacheObjDetails;
+import tqs.airquality.model.CacheStats;
+import tqs.airquality.model.City;
 import tqs.airquality.model.CityAirQuality;
 import tqs.airquality.service.AirQualityService;
 
+import java.util.List;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tqs.airquality.service.CityService;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -19,7 +25,10 @@ public class AirQualityController {
     private static final Logger LOG = LogManager.getLogger(AirQualityController.class);
 
     @Autowired
-    private AirQualityService service;
+    AirQualityService service;
+
+    @Autowired
+    CityService cityService;
 
     @CrossOrigin
     @GetMapping("/airquality")
@@ -27,14 +36,36 @@ public class AirQualityController {
             @RequestParam(value = "city") String city,
             @RequestParam(value = "country", required = false) String country) {
         LOG.info("Received Request for /airquality with params: city: " + city + " and country: " + country);
-        Optional<CityAirQuality> cityAirData = service.getCityAirQuality(city, Optional.ofNullable(country));
-        if (cityAirData.isEmpty()) {
+
+        Optional<CityAirQuality> optCityAirQuality = service.getCityAirQuality(city, Optional.ofNullable(country));
+        if (optCityAirQuality.isEmpty()) {
             LOG.warn("Returning City Not Found");
+            AirQualityCache.cacheRequest("city=" + city + "&country=" + country, null);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        CityAirQuality cityAirQuality = cityAirData.get();
+
+        CityAirQuality cityAirQuality = optCityAirQuality.get();
+
         LOG.info("Returning Air Quality for City: " + cityAirQuality.getCityName()
                 + " of the Country: " + cityAirQuality.getCountryCode());
+
         return new ResponseEntity<>(cityAirQuality, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping("/cachestats")
+    public ResponseEntity<CacheStats> getAirMetrics() {
+        LOG.info("Received Request for /cachestats");
+        return new ResponseEntity<>(AirQualityCache.getCacheStats(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping("/cities")
+    public ResponseEntity<List<City>> getAllCities() {
+        LOG.info("Received Request for /cities");
+
+        List<City> allCities = cityService.getAllCities();
+
+        return new ResponseEntity<>(allCities, HttpStatus.OK);
     }
 }

@@ -1,81 +1,64 @@
 package tqs.airquality.cache;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import tqs.airquality.model.CityAirQuality;
+import tqs.airquality.model.CacheObjDetails;
+import tqs.airquality.model.CacheStats;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AirQualityCache {
     private static final Logger LOG = LogManager.getLogger(AirQualityCache.class);
-    private long timeToLive;
-    private int numberOfRequests;
-    private int numberOfHits;
-    private int numberOfMisses;
 
-    @JsonIgnore
-    private Map<String, CityAirQuality> requests;
+    // GLOBAL VARIABLES
+    public static long timeToLive = 60 * 1000;
+    public static int totalChecks = 0;
+    public static int hits = 0;
+    public static int misses = 0;
+    public static Map<String, Object> cache = new HashMap<>();
+    public static Map<String, Long> cacheExpiration = new HashMap<>();
 
-    @JsonIgnore
-    private Map<String, Long> requestsExpiration;
-
-    public AirQualityCache(long defaultExpire) {
-        this.requests = new HashMap<>();
-        this.requestsExpiration = new HashMap<>();
-        this.timeToLive = defaultExpire;
+    public static void cacheRequest(String request, Object returnValue) {
+        LOG.info("Caching Request and Updating TTL: " + request);
+        cache.put(request, returnValue);
+        cacheExpiration.put(request, System.currentTimeMillis() + timeToLive);
     }
 
-    public void storeRequest(String name, CityAirQuality obj) {
-        this.requests.put(name, obj);
-        this.requestsExpiration.put(name, getCurrentTimeInMillis() + this.timeToLive * 1000);
-    }
-
-    public CityAirQuality getRequest(String name) {
-        this.numberOfRequests++;
-        CityAirQuality request = null;
-
-        if (!exists(name)) {
-            this.numberOfMisses++;
-        } else if (hasExpired(name)) {
-            this.removeExpiredRequest(name);
-            this.numberOfMisses++;
+    public static CacheObjDetails checkCache(String request) {
+        LOG.info("Checking if Request is in Cache: " + request);
+        totalChecks++;
+        CacheObjDetails cacheObjDetails = new CacheObjDetails(false, null);
+        if (!isRequestCached(request)) {
+            LOG.info("(MISS) Request not Cached: " + request);
+            misses++;
+        } else if (isRequestExpired(request)) {
+            LOG.info("(MISS Request Expired: " + request);
+            deleteRequestFromCache(request);
+            misses++;
         } else {
-            this.numberOfHits++;
-            request = this.requests.get(name);
+            LOG.info("(HIT) Request is Cached: " + request);
+            hits++;
+            return new CacheObjDetails(true, cache.get(request));
         }
-
-        return request;
+        return cacheObjDetails;
     }
 
-    public int getNumberOfRequests() {
-        return numberOfRequests;
+    private static boolean isRequestCached(String request) {
+        return cache.containsKey(request);
     }
 
-    public int getNumberOfHits() {
-        return numberOfHits;
+    private static boolean isRequestExpired(String request) {
+        Long expirationTime = cacheExpiration.get(request);
+        return System.currentTimeMillis() > expirationTime;
     }
 
-    public int getNumberOfMisses() {
-        return numberOfMisses;
+    private static void deleteRequestFromCache(String request) {
+        cache.remove(request);
+        cacheExpiration.remove(request);
     }
 
-    private boolean exists(String name) {
-        return this.requestsExpiration.containsKey(name);
-    }
-
-    private boolean hasExpired(String name) {
-        Long expireTime = this.requestsExpiration.get(name);
-        return getCurrentTimeInMillis() > expireTime;
-    }
-
-    private void removeExpiredRequest(String name) {
-        this.requests.remove(name);
-        this.requestsExpiration.remove(name);
-    }
-
-    private long getCurrentTimeInMillis() {
-        return System.currentTimeMillis();
+    public static CacheStats getCacheStats() {
+        return new CacheStats();
     }
 }

@@ -31,4 +31,20 @@ public class City implements Serializable {
     private double lat;
 
     private double lon;
+
+    public City() {};
+
+    public City(
+            int cityId, String cityName, String stateCode,
+            String countryCode, String countryFull,
+            double lat, double lon)
+    {
+        this.cityId = cityId;
+        this.cityName = cityName;
+        this.stateCode = stateCode;
+        this.countryCode = countryCode;
+        this.countryFull = countryFull;
+        this.lat = lat;
+        this.lon = lon;
+    }
 }

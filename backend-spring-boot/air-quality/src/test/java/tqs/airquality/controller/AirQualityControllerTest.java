@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import tqs.airquality.model.AirData;
 import tqs.airquality.model.CityAirQuality;
 import tqs.airquality.service.AirQualityService;
+import tqs.airquality.service.CityService;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -28,6 +30,9 @@ public class AirQualityControllerTest {
 
     @MockBean
     private AirQualityService service;
+
+    @MockBean
+    private CityService cityService;
 
     @Test
     public void testGetAirQualityByValidCity_thenReturnValidAirData() throws Exception {
