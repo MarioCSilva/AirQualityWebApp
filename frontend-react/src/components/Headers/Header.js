@@ -6,10 +6,10 @@ import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 // @material-ui/icons components
-import EmojiEvents from "@material-ui/icons/EmojiEvents";
-import GroupAdd from "@material-ui/icons/GroupAdd";
-import InsertChartOutlined from "@material-ui/icons/InsertChartOutlined";
-import PieChart from "@material-ui/icons/PieChart";
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import TimerIcon from '@material-ui/icons/Timer';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 import AirQualityService from "../../services/AirQualityService";
 
 // core components
@@ -20,7 +20,7 @@ import componentStyles from "assets/theme/components/header.js";
 const useStyles = makeStyles(componentStyles);
 
 
-const Header = () => {
+const Header = (update) => {
   const classes = useStyles();
   const [errorMessage, setErrorMessage] = useState('');
   const [hits, setHits] = useState(0);
@@ -39,7 +39,7 @@ const Header = () => {
     }).catch((err) => {
       setErrorMessage("Rest API Unavailable");
     })
-  }, [])
+  }, [update])
 
   const theme = useTheme();
   return (
@@ -57,15 +57,15 @@ const Header = () => {
                 <CardStats
                   subtitle={"Hits"}
                   title={hits}
-                  icon={InsertChartOutlined}
-                  color="bgError"
+                  icon={CheckIcon}
+                  color="bgInfo"
                 />
               </Grid>
               <Grid item xl={3} lg={6} xs={12}>
                 <CardStats
                   subtitle="Misses"
                   title={misses}
-                  icon={PieChart}
+                  icon={ClearIcon}
                   color="bgWarning"
                 />
               </Grid>
@@ -73,16 +73,15 @@ const Header = () => {
                 <CardStats
                   subtitle="Time To Live"
                   title={timeToLive}
-                  icon={GroupAdd}
+                  icon={TimerIcon}
                   color="bgWarningLight"
                 />
               </Grid>
               <Grid item xl={3} lg={6} xs={12}>
                 <CardStats
-                  subtitle="Total Cache Checks"
+                  subtitle="Total Requests"
                   title={totalChecks}
-                  icon={EmojiEvents}
-                  color="bgInfo"
+                  icon={TrendingUpIcon}
                 />
               </Grid>
             </Grid>
