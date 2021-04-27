@@ -16,6 +16,8 @@ import tqs.airquality.repository.CityRepository;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+
 import static org.mockito.BDDMockito.given;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,10 +51,12 @@ public class CityServiceTest {
 
         Mockito.when(cityRepository.findAll()).thenReturn(Arrays.asList(aveiro, porto));
 
-        assertEquals(Arrays.asList(aveiro, porto), cityService.getAllCities());
-        assertEquals(2, cityService.getAllCities().size());
+        List<City> cities = cityService.getAllCities();
 
-        Mockito.verify(cityRepository, Mockito.times(2)).findAll();
+        assertEquals(Arrays.asList(aveiro, porto), cities);
+        assertEquals(2, cities.size());
+
+        Mockito.verify(cityRepository, Mockito.times(1)).findAll();
     }
 
 }
