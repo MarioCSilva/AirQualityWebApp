@@ -3,11 +3,9 @@ package tqs.airquality.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import tqs.airquality.cache.AirQualityCache;
+import tqs.airquality.cache.Cache;
 import tqs.airquality.model.CacheObjDetails;
 import tqs.airquality.model.CityAirQuality;
 
@@ -19,34 +17,41 @@ public class AirQualityService {
 
     private static final String BASE_URL = "https://api.weatherbit.io/v2.0/current/airquality?";
     private static final String KEY = "&key=c731341737c746a08ca0e6c8fc895da0";
+
+
     private final RestTemplate restTemplate = new RestTemplateBuilder().build();
 
-    public Optional<CityAirQuality> getCityAirQuality(String city, Optional<String> country) {
+    public Optional<CityAirQuality> getCityAirQualityByName(String city, Optional<String> country) {
         String request = "";
         if (country.isEmpty())
-            request = "city=" + city;
+            request = String.format("city=%s", city);
         else
-            request = "city=" + city + "&country=" + country;
+            request = String.format("city=%s&country=%s", city, country.get());
 
-        CacheObjDetails cacheObjDetails = AirQualityCache.checkCache(request);
+        return getCityAirQuality(request);
+    }
+
+    public Optional<CityAirQuality> getCityAirQualityById(int cityId) {
+        String request = String.format("city_id=%s", cityId);
+
+        return getCityAirQuality(request);
+    }
+
+    private Optional<CityAirQuality> getCityAirQuality(String request) {
+        CacheObjDetails cacheObjDetails = Cache.checkCache(request);
         CityAirQuality cityAirQuality = (CityAirQuality) cacheObjDetails.getReturnValue();
 
-        if (!cacheObjDetails.getFound()) {
-            String url = BASE_URL;
+        if (Boolean.FALSE.equals(cacheObjDetails.getFound())) {
             try {
-                if (!country.isEmpty()) {
-                    url += "city=" + city + "&country=" + country.get() + KEY;
-                } else {
-                    url += "city=" + city + KEY;
-                }
-                LOG.info("Request Made to External API With Url: " + url);
+                String url = String.format("%s%s%s", BASE_URL, request, KEY);
+                LOG.info(String.format("Request Made to External API With Url: %s", url));
                 cityAirQuality = this.restTemplate.getForObject(url, CityAirQuality.class);
             } catch (Exception ex) {
                 LOG.error("Error When Making a Request to External API");
             }
         }
 
-        AirQualityCache.cacheRequest("city=" + city + "&country=" + country, cityAirQuality);
+        Cache.cacheRequest(request, cityAirQuality);
 
         return Optional.ofNullable(cityAirQuality);
     }

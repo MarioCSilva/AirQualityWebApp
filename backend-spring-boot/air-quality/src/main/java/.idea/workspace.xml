@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3a4b74d5-f174-4d67-b321-2199651417ac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../test/java/tqs/airquality/cache/AirQualityCacheTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test/java/tqs/airquality/service/AirQualityServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tqs/airquality/cache/AirQualityCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/tqs/airquality/cache/AirQualityCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tqs/airquality/controller/AirQualityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tqs/airquality/controller/AirQualityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tqs/airquality/model/CacheStats.java" beforeDir="false" afterPath="$PROJECT_DIR$/tqs/airquality/model/CacheStats.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tqs/airquality/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/tqs/airquality/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tqs/airquality/service/AirQualityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tqs/airquality/service/AirQualityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tqs/airquality/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tqs/airquality/service/CityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/cities_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/cities_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../test/java/tqs/airquality/AirQualityApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../test/java/tqs/airquality/controller/AirQualityControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../test/java/tqs/airquality/controller/AirQualityControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../test/java/tqs/airquality/repository/CityRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../test/java/tqs/airquality/repository/CityRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../test/java/tqs/airquality/service/CityServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../test/java/tqs/airquality/service/CityServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/build/apple-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/build/apple-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/build/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/build/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/public/apple-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/public/apple-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/assets/img/brand/argon-react.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/assets/img/brand/argon-react.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/assets/img/theme/profile-cover.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/assets/img/theme/profile-cover.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/assets/theme/components/user-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/assets/theme/components/user-header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/components/Headers/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/components/Headers/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/layouts/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/layouts/Admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/layouts/Auth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/services/AirQualityService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../frontend-react/src/services/AirQualityService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../frontend-react/src/views/admin/Icons.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="ProjectId" id="1s4N85rMvBAyQZNl7sLZawLQVvC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a4b74d5-f174-4d67-b321-2199651417ac" name="Default Changelist" comment="" />
+      <created>1620127740250</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1620127740250</updated>
+      <workItem from="1620127741829" duration="16000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

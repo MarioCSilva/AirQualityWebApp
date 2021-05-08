@@ -2,12 +2,19 @@ package tqs.airquality.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import tqs.airquality.cache.Cache;
 import tqs.airquality.model.AirData;
+import tqs.airquality.model.CacheObjDetails;
+import tqs.airquality.model.City;
 import tqs.airquality.model.CityAirQuality;
 import tqs.airquality.service.AirQualityService;
 import tqs.airquality.service.CityService;
@@ -19,11 +26,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import static org.hamcrest.Matchers.*;
+
+import java.util.Arrays;
 import java.util.Optional;
 
 @WebMvcTest(AirQualityController.class)
-public class AirQualityControllerTest {
+class AirQualityControllerTest {
     private static final Logger LOG = LogManager.getLogger(AirQualityControllerTest.class);
+
+    private static MockedStatic<Cache> mockCache;
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,11 +46,18 @@ public class AirQualityControllerTest {
     @MockBean
     private CityService cityService;
 
+    @BeforeAll
+    public static void setUp() {
+        mockCache = Mockito.mockStatic(Cache.class);
+        mockCache.when(() -> Cache.checkCache("cities"))
+                .thenReturn(new CacheObjDetails(false, null));
+    }
+
     @Test
-    public void testGetAirQualityByValidCity_thenReturnValidAirData() throws Exception {
+    void whenGetAirQualityByValidCityName_thenReturnValidAirData() throws Exception {
         CityAirQuality airQualityAveiro = createCityAirQualityObj();
 
-        given(service.getCityAirQuality("Aveiro", Optional.empty()))
+        given(service.getCityAirQualityByName("Aveiro", Optional.empty()))
                 .willReturn(Optional.of(airQualityAveiro));
 
         mockMvc.perform(get("/api/v1/airquality?city=Aveiro"))
@@ -50,15 +69,15 @@ public class AirQualityControllerTest {
                 .andExpect(jsonPath("state_code").value("02"))
                 .andExpect(jsonPath("country_code").value("PT"));
 
-        verify(service, times(1)).getCityAirQuality("Aveiro", Optional.empty());
+        verify(service, times(1)).getCityAirQualityByName("Aveiro", Optional.empty());
     }
 
 
     @Test
-    public void testGetAirQualityByValidCityAndCountry_thenReturnValidAirData() throws Exception {
+    void whenGetAirQualityByValidCityNameAndCountryName_thenReturnValidAirData() throws Exception {
         CityAirQuality airQualityAveiro = createCityAirQualityObj();
 
-        given(service.getCityAirQuality("Aveiro", Optional.of("Portugal")))
+        given(service.getCityAirQualityByName("Aveiro", Optional.of("Portugal")))
                 .willReturn(Optional.of(airQualityAveiro));
 
         mockMvc.perform(get("/api/v1/airquality?city=Aveiro&country=Portugal"))
@@ -70,18 +89,80 @@ public class AirQualityControllerTest {
                 .andExpect(jsonPath("state_code").value("02"))
                 .andExpect(jsonPath("country_code").value("PT"));
 
-        verify(service, times(1)).getCityAirQuality("Aveiro", Optional.of("Portugal"));
+        verify(service, times(1)).getCityAirQualityByName("Aveiro", Optional.of("Portugal"));
     }
 
     @Test
-    public void testGetAirQualityByInvalidCity_thenReturnNotFound() throws Exception {
-        given(service.getCityAirQuality("xptoAveiro", Optional.empty()))
+    void whenGetAirQualityByValidCityId_thenReturnValidAirData() throws Exception {
+        CityAirQuality airQualityAveiro = createCityAirQualityObj();
+
+        given(service.getCityAirQualityById(0))
+                .willReturn(Optional.of(airQualityAveiro));
+
+        mockMvc.perform(get("/api/v1/airquality/0"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("city_name").value("Aveiro"))
+                .andExpect(jsonPath("lon").value("-8.64554"))
+                .andExpect(jsonPath("timezone").value("Europe/Lisbon"))
+                .andExpect(jsonPath("lat").value("40.64427"))
+                .andExpect(jsonPath("state_code").value("02"))
+                .andExpect(jsonPath("country_code").value("PT"));
+
+        verify(service, times(1)).getCityAirQualityById(0);
+    }
+
+    @Test
+    void whenGetAirQualityByInvalidCityName_thenReturnNotFound() throws Exception {
+        given(service.getCityAirQualityByName("xptoAveiro", Optional.empty()))
                 .willReturn(Optional.empty());
 
         mockMvc.perform(get("/api/v1/airquality?city=xptoAveiro"))
                 .andExpect(status().isNotFound());
 
-        verify(service, times(1)).getCityAirQuality("xptoAveiro", Optional.empty());
+        verify(service, times(1)).getCityAirQualityByName("xptoAveiro", Optional.empty());
+    }
+
+    @Test
+    void whenGetAirQualityByInvalidCityId_thenReturnNotFound() throws Exception {
+        given(service.getCityAirQualityById(99))
+                .willReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/v1/airquality/99"))
+                .andExpect(status().isNotFound());
+
+        verify(service, times(1)).getCityAirQualityById(99);
+    }
+
+    @Test
+    void whenGetAllCities_thenReturnAllCities() throws Exception {
+        given(cityService.getAllCities())
+                .willReturn(Arrays.asList(createCity()));
+
+        mockMvc.perform(get("/api/v1/cities"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$.[0].city_name").value("Aveiro"));
+
+        verify(cityService, times(1)).getAllCities();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        mockCache.close();
+    }
+
+    public City createCity() {
+        City city = new City();
+        city.setCityId(1);
+        city.setCityName("Aveiro");
+        city.setCountryCode("PT");
+        city.setCountryFull("Portugal");
+        city.setLat(40.64427);
+        city.setLon(-8.64554);
+        city.setStateCode("02");
+
+        return city;
     }
 
     public CityAirQuality createCityAirQualityObj() {

@@ -2,6 +2,9 @@ package tqs.airquality.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -11,6 +14,8 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class City implements Serializable {
     @Id
     @JsonProperty("city_id")
@@ -31,20 +36,4 @@ public class City implements Serializable {
     private double lat;
 
     private double lon;
-
-    public City() {};
-
-    public City(
-            int cityId, String cityName, String stateCode,
-            String countryCode, String countryFull,
-            double lat, double lon)
-    {
-        this.cityId = cityId;
-        this.cityName = cityName;
-        this.stateCode = stateCode;
-        this.countryCode = countryCode;
-        this.countryFull = countryFull;
-        this.lat = lat;
-        this.lon = lon;
-    }
 }

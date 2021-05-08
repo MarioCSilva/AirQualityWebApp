@@ -8,47 +8,46 @@ import tqs.airquality.model.CacheStats;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AirQualityCache {
-    private static final Logger LOG = LogManager.getLogger(AirQualityCache.class);
+public class Cache {
+    private static final Logger LOG = LogManager.getLogger(Cache.class);
 
-    // GLOBAL VARIABLES
-    public static long timeToLive = 60 * 1000;
-    public static int totalChecks = 0;
-    public static int hits = 0;
-    public static int misses = 0;
-    public static Map<String, Object> cache = new HashMap<>();
-    public static Map<String, Long> cacheExpiration = new HashMap<>();
+    private static long timeToLive = 30l * 1000l;
+    private static int totalChecks = 0;
+    private static int hits = 0;
+    private static int misses = 0;
+    private static Map<String, Object> cache = new HashMap<>();
+    private static Map<String, Long> cacheExpiration = new HashMap<>();
 
     public static void cacheRequest(String request, Object returnValue) {
-        LOG.info("Caching Request and Updating TTL: " + request);
+        LOG.info(String.format("Caching Request and Updating TTL: %s" , request));
         cache.put(request, returnValue);
         cacheExpiration.put(request, System.currentTimeMillis() + timeToLive);
     }
 
     public static CacheObjDetails checkCache(String request) {
-        LOG.info("Checking if Request is in Cache: " + request);
+        LOG.info(String.format("Checking if Request is in Cache: %s", request));
         totalChecks++;
         CacheObjDetails cacheObjDetails = new CacheObjDetails(false, null);
         if (!isRequestCached(request)) {
-            LOG.info("(MISS) Request not Cached: " + request);
+            LOG.info(String.format("(MISS) Request not Cached: %s", request));
             misses++;
         } else if (isRequestExpired(request)) {
-            LOG.info("(MISS Request Expired: " + request);
+            LOG.info(String.format("(MISS Request Expired: %s", request));
             deleteRequestFromCache(request);
             misses++;
         } else {
-            LOG.info("(HIT) Request is Cached: " + request);
+            LOG.info(String.format("(HIT) Request is Cached: %s", request));
             hits++;
             return new CacheObjDetails(true, cache.get(request));
         }
         return cacheObjDetails;
     }
 
-    private static boolean isRequestCached(String request) {
+    public static boolean isRequestCached(String request) {
         return cache.containsKey(request);
     }
 
-    private static boolean isRequestExpired(String request) {
+    public static boolean isRequestExpired(String request) {
         Long expirationTime = cacheExpiration.get(request);
         return System.currentTimeMillis() > expirationTime;
     }
@@ -60,5 +59,21 @@ public class AirQualityCache {
 
     public static CacheStats getCacheStats() {
         return new CacheStats();
+    }
+
+    public static long getTimeToLive() {
+        return timeToLive;
+    }
+
+    public static int getTotalChecks() {
+        return totalChecks;
+    }
+
+    public static int getHits() {
+        return hits;
+    }
+
+    public static int getMisses() {
+        return misses;
     }
 }
