@@ -12,8 +12,8 @@ const componentStyles = (theme) => ({
     transition: "all .15s ease",
     opacity: ".9",
     background:
-      "linear-gradient(87deg," +
-      theme.palette.dark.main +
+      "linear-gradient(250deg," +
+      theme.palette.info.main +
       ",#1a174d)!important",
   },
   containerRoot: {

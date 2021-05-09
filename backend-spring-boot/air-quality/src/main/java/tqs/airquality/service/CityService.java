@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import tqs.airquality.cache.Cache;
+import tqs.airquality.cache.ServiceCache;
 import tqs.airquality.model.CacheObjDetails;
 import tqs.airquality.model.City;
 import tqs.airquality.repository.CityRepository;
@@ -26,7 +26,7 @@ public class CityService {
     public List<City> getAllCities() {
         LOG.info("Fetching all cities from City Repository");
 
-        CacheObjDetails cacheObjDetails = Cache.checkCache("cities");
+        CacheObjDetails cacheObjDetails = ServiceCache.checkCache("cities");
         List<City> cities = (List<City>) cacheObjDetails.getReturnValue();
 
         if (Boolean.FALSE.equals(cacheObjDetails.getFound())) {
@@ -53,7 +53,7 @@ public class CityService {
             }
 
         }
-        Cache.cacheRequest("cities", cities);
+        ServiceCache.cacheRequest("cities", cities);
         return cities;
     }
 }

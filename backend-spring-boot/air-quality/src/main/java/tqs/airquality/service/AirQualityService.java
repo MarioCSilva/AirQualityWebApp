@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import tqs.airquality.cache.Cache;
+import tqs.airquality.cache.ServiceCache;
 import tqs.airquality.model.CacheObjDetails;
 import tqs.airquality.model.CityAirQuality;
 
@@ -38,7 +38,7 @@ public class AirQualityService {
     }
 
     private Optional<CityAirQuality> getCityAirQuality(String request) {
-        CacheObjDetails cacheObjDetails = Cache.checkCache(request);
+        CacheObjDetails cacheObjDetails = ServiceCache.checkCache(request);
         CityAirQuality cityAirQuality = (CityAirQuality) cacheObjDetails.getReturnValue();
 
         if (Boolean.FALSE.equals(cacheObjDetails.getFound())) {
@@ -51,7 +51,7 @@ public class AirQualityService {
             }
         }
 
-        Cache.cacheRequest(request, cityAirQuality);
+        ServiceCache.cacheRequest(request, cityAirQuality);
 
         return Optional.ofNullable(cityAirQuality);
     }

@@ -29,6 +29,19 @@ class AirQualityService {
         return await res.json();
     }
 
+    async getCityAirQualityById(cityId) {
+        var res = null;
+        res = await fetch(
+            CITY_AIR_QUALITY_URL + '/' + cityId, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return await res.json();
+    }
+
     async getCacheAirQuality() {
        const res = await fetch(
             CACHE_AIR_QUALITY_URL, {

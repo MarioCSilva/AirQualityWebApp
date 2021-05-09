@@ -2,7 +2,7 @@ package tqs.airquality.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import tqs.airquality.cache.Cache;
+import tqs.airquality.cache.ServiceCache;
 
 import java.io.Serializable;
 
@@ -15,10 +15,10 @@ public class CacheStats implements Serializable {
     private int totalChecks;
 
     public CacheStats() {
-        this.hits = Cache.getHits();
-        this.misses = Cache.getMisses();
-        this.timeToLive = Cache.getTimeToLive();
-        this.totalChecks = Cache.getTotalChecks();
+        this.hits = ServiceCache.getHits();
+        this.misses = ServiceCache.getMisses();
+        this.timeToLive = ServiceCache.getTimeToLive();
+        this.totalChecks = ServiceCache.getTotalChecks();
     }
 
 }

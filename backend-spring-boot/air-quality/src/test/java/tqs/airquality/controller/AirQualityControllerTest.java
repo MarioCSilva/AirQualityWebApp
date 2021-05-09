@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import tqs.airquality.cache.Cache;
+import tqs.airquality.cache.ServiceCache;
 import tqs.airquality.model.AirData;
 import tqs.airquality.model.CacheObjDetails;
 import tqs.airquality.model.City;
@@ -35,7 +35,7 @@ import java.util.Optional;
 class AirQualityControllerTest {
     private static final Logger LOG = LogManager.getLogger(AirQualityControllerTest.class);
 
-    private static MockedStatic<Cache> mockCache;
+    private static MockedStatic<ServiceCache> mockCache;
 
     @Autowired
     private MockMvc mockMvc;
@@ -48,8 +48,8 @@ class AirQualityControllerTest {
 
     @BeforeAll
     public static void setUp() {
-        mockCache = Mockito.mockStatic(Cache.class);
-        mockCache.when(() -> Cache.checkCache("cities"))
+        mockCache = Mockito.mockStatic(ServiceCache.class);
+        mockCache.when(() -> ServiceCache.checkCache("cities"))
                 .thenReturn(new CacheObjDetails(false, null));
     }
 

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import tqs.airquality.cache.Cache;
+import tqs.airquality.cache.ServiceCache;
 import tqs.airquality.model.CacheStats;
 import tqs.airquality.model.City;
 import tqs.airquality.model.CityAirQuality;
@@ -39,7 +39,7 @@ public class AirQualityController {
         Optional<CityAirQuality> optCityAirQuality = service.getCityAirQualityByName(city, Optional.ofNullable(country));
         if (optCityAirQuality.isEmpty()) {
             LOG.warn("Returning City Not Found");
-            Cache.cacheRequest(String.format("city=%s&country=%s", city, country), null);
+            ServiceCache.cacheRequest(String.format("city=%s&country=%s", city, country), null);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -61,7 +61,7 @@ public class AirQualityController {
         Optional<CityAirQuality> optCityAirQuality = service.getCityAirQualityById(cityId);
         if (optCityAirQuality.isEmpty()) {
             LOG.warn("Returning City Not Found");
-            Cache.cacheRequest(String.format("cityId=%d", cityId), null);
+            ServiceCache.cacheRequest(String.format("cityId=%d", cityId), null);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -77,7 +77,7 @@ public class AirQualityController {
     @GetMapping("/cachestats")
     public ResponseEntity<CacheStats> getCacheStats() {
         LOG.info("Received Request for /cachestats");
-        return new ResponseEntity<>(Cache.getCacheStats(), HttpStatus.OK);
+        return new ResponseEntity<>(ServiceCache.getCacheStats(), HttpStatus.OK);
     }
 
     @CrossOrigin

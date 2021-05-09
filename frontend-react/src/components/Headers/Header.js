@@ -30,7 +30,6 @@ const Header = (update) => {
 
   useEffect(() => {
     AirQualityService.getCacheAirQuality().then((res) => {
-      console.log(res)
       setHits(res.hits);
       setMisses(res.misses);
       setTimeToLive(res.timeToLive);
@@ -44,14 +43,14 @@ const Header = (update) => {
   const theme = useTheme();
   return (
     <>
-    { errorMessage ? errorMessage : 
       <div className={classes.header}>
         <Container
           maxWidth={false}
           component={Box}
           classes={{ root: classes.containerRoot }}
-        >
+          >
           <div>
+          { errorMessage ? <span style={{color: 'white', fontSize: 18}}>{errorMessage}</span> : 
             <Grid container>
               <Grid item xl={3} lg={6} xs={12}>
                 <CardStats
@@ -85,10 +84,10 @@ const Header = (update) => {
                 />
               </Grid>
             </Grid>
+            }
           </div>
         </Container>
       </div>
-      }
     </>
   );
 };

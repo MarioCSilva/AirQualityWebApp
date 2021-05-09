@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 @ExtendWith(MockitoExtension.class)
-public class AirQualityServiceTest {
+class AirQualityServiceTest {
     private static final Logger LOG = LogManager.getLogger(CityServiceTest.class);
 
     private static City aveiro;
@@ -37,10 +37,4 @@ public class AirQualityServiceTest {
 
         //given(cityRepository.findAll()).willReturn(Arrays.asList(aveiro, porto));
     }
-
-    @Test
-    void getAllCitiesTest() throws IOException {
-        LOG.info("");
-    }
-
 }

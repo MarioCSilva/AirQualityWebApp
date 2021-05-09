@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.MockedStatic;
 
 import org.mockito.junit.jupiter.MockitoExtension;
-import tqs.airquality.cache.Cache;
+import tqs.airquality.cache.ServiceCache;
 import tqs.airquality.model.CacheObjDetails;
 import tqs.airquality.model.City;
 import tqs.airquality.repository.CityRepository;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CityServiceTest {
     private static final Logger LOG = LogManager.getLogger(CityServiceTest.class);
 
-    private static MockedStatic<Cache> mockCache;
+    private static MockedStatic<ServiceCache> mockCache;
 
     private static City aveiro;
     private static City porto;
@@ -44,8 +44,8 @@ class CityServiceTest {
         porto = new City(2735943, "Porto", "17",
                 "PT", "Portugal", 41.14961, -8.61099);
 
-        mockCache = Mockito.mockStatic(Cache.class);
-        mockCache.when(() -> Cache.checkCache("cities"))
+        mockCache = Mockito.mockStatic(ServiceCache.class);
+        mockCache.when(() -> ServiceCache.checkCache("cities"))
                 .thenReturn(new CacheObjDetails(false, null));
     }
 

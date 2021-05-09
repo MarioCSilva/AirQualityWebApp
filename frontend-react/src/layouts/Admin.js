@@ -57,7 +57,7 @@ const Admin = () => {
         <Sidebar
           routes={routes}
           logo={{
-            innerLink: "/admin/index",
+            innerLink: "/admin/search",
             imgSrc: require("../assets/img/brand/argon-react.png").default,
             imgAlt: "...",
           }}
@@ -67,7 +67,7 @@ const Admin = () => {
           <AdminNavbar brandText={getBrandText(location.pathname)} />
           <Switch>
             {getRoutes(routes)}
-            <Redirect from="*" to="/admin/index" />
+            <Redirect from="*" to="/admin/search" />
           </Switch>
           <Container
             maxWidth={false}
