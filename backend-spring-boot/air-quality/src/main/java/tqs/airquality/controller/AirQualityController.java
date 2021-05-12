@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tqs.airquality.service.CityService;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/")
 public class AirQualityController {
@@ -29,7 +30,6 @@ public class AirQualityController {
     @Autowired
     CityService cityService;
 
-    @CrossOrigin
     @GetMapping("/airquality")
     public ResponseEntity<CityAirQuality> getAirQuality(
             @RequestParam(value = "city") String city,
@@ -52,7 +52,6 @@ public class AirQualityController {
     }
 
 
-    @CrossOrigin
     @GetMapping("/airquality/{id}")
     public ResponseEntity<CityAirQuality> getAirQuality(
             @PathVariable(value = "id") int cityId) {
@@ -73,14 +72,12 @@ public class AirQualityController {
         return new ResponseEntity<>(cityAirQuality, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping("/cachestats")
     public ResponseEntity<CacheStats> getCacheStats() {
         LOG.info("Received Request for /cachestats");
         return new ResponseEntity<>(ServiceCache.getCacheStats(), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping("/cities")
     public ResponseEntity<List<City>> getAllCities() {
         LOG.info("Received Request for /cities");

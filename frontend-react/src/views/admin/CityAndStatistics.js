@@ -477,6 +477,7 @@ const CityAndStatistics = () => {
                       <>
                       <Grid
                         key={item.city_id}
+                        id={'card_' + item.city_name+', ' + item.country_code}
                         item
                         lg={4}
                         md={12}

@@ -2,6 +2,7 @@ package tqs.airquality.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,8 +19,8 @@ public class AirQualityService {
     private static final String BASE_URL = "https://api.weatherbit.io/v2.0/current/airquality?";
     private static final String KEY = "&key=c731341737c746a08ca0e6c8fc895da0";
 
-
-    private final RestTemplate restTemplate = new RestTemplateBuilder().build();
+    @Autowired
+    private RestTemplate restTemplate;
 
     public Optional<CityAirQuality> getCityAirQualityByName(String city, Optional<String> country) {
         String request = "";
@@ -39,7 +40,7 @@ public class AirQualityService {
 
     private Optional<CityAirQuality> getCityAirQuality(String request) {
         CacheObjDetails cacheObjDetails = ServiceCache.checkCache(request);
-        CityAirQuality cityAirQuality = (CityAirQuality) cacheObjDetails.getReturnValue();
+        CityAirQuality cityAirQuality = null;
 
         if (Boolean.FALSE.equals(cacheObjDetails.getFound())) {
             try {
@@ -49,6 +50,8 @@ public class AirQualityService {
             } catch (Exception ex) {
                 LOG.error("Error When Making a Request to External API");
             }
+        } else {
+            cityAirQuality = (CityAirQuality) cacheObjDetails.getReturnValue();
         }
 
         ServiceCache.cacheRequest(request, cityAirQuality);

@@ -142,6 +142,7 @@ function SearchAirqualityView() {
                 </div>
                 <Box textAlign="center">
                   <Button
+                    id="search_air_quality"
                     color="inherit"
                     classes={{
                       label: classes.buttonLabel,
@@ -196,7 +197,7 @@ function SearchAirqualityView() {
                       height="2rem!important"
                       style={{color: 'darkBlue'}}
                     ></Box>
-                    <Typography variant="h1" style={{color: 'blue'}}>
+                    <Typography variant="h1" style={{color: 'blue'}} id="location">
                     {cityAirQuality.city_name}
                     {', ' + cityAirQuality.country_code}
                   </Typography>

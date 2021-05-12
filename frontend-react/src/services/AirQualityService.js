@@ -12,18 +12,20 @@ class AirQualityService {
                 CITY_AIR_QUALITY_URL + '?city=' + city + '&country=' + country, {
                 method: 'GET',
                 mode: 'cors',
-                headers: {
+                headers: new Headers({
+                    'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
-                }
+                })
             });
         } else {
             res = await fetch(
                 CITY_AIR_QUALITY_URL + '?city=' + city, {
                 method: 'GET',
                 mode: 'cors',
-                headers: {
+                headers: new Headers({
+                    'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
-                }
+                })
             });
         }
         return await res.json();
@@ -36,6 +38,7 @@ class AirQualityService {
             method: 'GET',
             mode: 'cors',
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
             }
         });
@@ -47,9 +50,10 @@ class AirQualityService {
             CACHE_AIR_QUALITY_URL, {
             method: 'GET',
             mode: 'cors',
-            headers: {
+            headers: new Headers({
+                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
-            }
+            })
         })
         return await res.json();
     }
@@ -59,9 +63,10 @@ class AirQualityService {
              CITIES, {
              method: 'GET',
              mode: 'cors',
-             headers: {
-                 'Content-Type': 'application/json',
-             }
+             headers: new Headers({
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+            })
          })
         return await res.json();
      }
