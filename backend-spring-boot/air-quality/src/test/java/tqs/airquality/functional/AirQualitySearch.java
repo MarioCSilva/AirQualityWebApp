@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Cucumber
 public class AirQualitySearch {
-
     private WebDriver driver;
 
     private int numberHits = 0;
@@ -77,7 +76,7 @@ public class AirQualitySearch {
         int curNumberRequests = Integer.parseInt(driver.findElement(By.cssSelector(".MuiBox-root-167")).getText());
 
         assertThat((curNumberHits==numberHits && curNumberMisses==numberMisses+1) ||
-                        (curNumberHits==numberHits + 1 && curNumberMisses==numberMisses), is(true));
+                (curNumberHits==numberHits + 1 && curNumberMisses==numberMisses), is(true));
         assertThat(curNumberRequests==numberRequests+1, is(true));
 
         numberHits = curNumberHits;
@@ -140,4 +139,5 @@ public class AirQualitySearch {
         assertThat(driver.findElement(By.cssSelector(".MuiBox-root-208")).getText(), is("o3"));
         assertThat(driver.findElement(By.cssSelector(".MuiBox-root-211")).getText(), is("co"));
     }
+
 }

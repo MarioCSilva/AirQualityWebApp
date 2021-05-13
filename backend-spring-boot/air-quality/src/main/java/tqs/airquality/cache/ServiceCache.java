@@ -48,8 +48,6 @@ public class ServiceCache {
     }
 
     public static boolean isRequestExpired(String request) {
-        LOG.info(String.format("Checking if Request is expired: %s", request));
-
         Long expirationTime = cacheExpiration.get(request);
         return System.currentTimeMillis() > expirationTime;
     }
