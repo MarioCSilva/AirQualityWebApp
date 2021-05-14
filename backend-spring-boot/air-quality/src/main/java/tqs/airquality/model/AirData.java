@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class AirData implements Serializable {
     @JsonProperty("mold_level")
     private double moldLevel;

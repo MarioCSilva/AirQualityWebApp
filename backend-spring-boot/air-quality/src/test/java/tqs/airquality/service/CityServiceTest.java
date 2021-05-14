@@ -17,10 +17,12 @@ import tqs.airquality.model.CacheObjDetails;
 import tqs.airquality.model.City;
 import tqs.airquality.repository.CityRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class CityServiceTest {
@@ -61,6 +63,20 @@ class CityServiceTest {
                 .extracting(City::getCityName).containsOnly(aveiro.getCityName(), porto.getCityName());
 
         Mockito.verify(cityRepository, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    void whenGetAllCitiesRepositoryEmpty_thenReadCSVAndReturnCitiesTest() {
+        LOG.info("Testing Request to City Service to Get All Cities from CSV");
+
+        Mockito.when(cityRepository.findAll()).thenReturn(new ArrayList<>());
+
+        List<City> cities = cityService.getAllCities();
+
+        assertThat(cities).hasSize(112);
+
+        Mockito.verify(cityRepository, Mockito.times(1)).findAll();
+        Mockito.verify(cityRepository, Mockito.times(112)).save(any(City .class));
     }
 
     @AfterAll

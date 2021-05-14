@@ -49,7 +49,7 @@ class AirQualityServiceTest {
     }
 
     @Test
-    public void testGetCityAirQualityByValidName() {
+    void testGetCityAirQualityByValidName() {
         LOG.info("Testing Getting City Air Quality by Valid Name");
 
         String requestUrl = "https://api.weatherbit.io/v2.0/current/airquality?city=aveiro&key=c731341737c746a08ca0e6c8fc895da0";
@@ -72,7 +72,7 @@ class AirQualityServiceTest {
 
 
     @Test
-    public void testGetCityAirQualityByValidNameAndCountry() {
+    void testGetCityAirQualityByValidNameAndCountry() {
         LOG.info("Testing Getting City Air Quality by Valid Name and Country");
 
         String requestUrl = "https://api.weatherbit.io/v2.0/current/airquality?city=aveiro&country=Portugal&key=c731341737c746a08ca0e6c8fc895da0";
@@ -94,7 +94,7 @@ class AirQualityServiceTest {
     }
 
     @Test
-    public void testGetCityAirQualityByInvalidName() {
+    void testGetCityAirQualityByInvalidName() {
         LOG.info("Testing Getting City Air Quality by Invalid Name");
 
         String requestUrl = "https://api.weatherbit.io/v2.0/current/airquality?city=12321321321&key=c731341737c746a08ca0e6c8fc895da0";
@@ -113,7 +113,26 @@ class AirQualityServiceTest {
     }
 
     @Test
-    public void testGetCityAirQualityByValidId() {
+    void testGetCityAirQualityByInvalidNameAndCountry() {
+        LOG.info("Testing Getting City Air Quality by Invalid Name And Country");
+
+        String requestUrl = "https://api.weatherbit.io/v2.0/current/airquality?city=12321321321&country=ES&key=c731341737c746a08ca0e6c8fc895da0";
+        when(restTemplate.getForObject(
+                requestUrl, CityAirQuality.class))
+                .thenReturn(null);
+
+        mockCache.when(() -> ServiceCache.checkCache("city=12321321321&country=ES"))
+                .thenReturn(new CacheObjDetails(false, null));
+
+        Optional<CityAirQuality> response = airQualService.getCityAirQualityByName("12321321321", Optional.of("ES"));
+
+        verify(restTemplate, times(1)).getForObject(requestUrl, CityAirQuality.class);
+
+        assertTrue(response.isEmpty());
+    }
+
+    @Test
+    void testGetCityAirQualityByValidId() {
         LOG.info("Testing Getting City Air Quality by Valid Id");
 
         String requestUrl = "https://api.weatherbit.io/v2.0/current/airquality?city_id=2742611&key=c731341737c746a08ca0e6c8fc895da0";
@@ -135,7 +154,7 @@ class AirQualityServiceTest {
     }
 
     @Test
-    public void testGetCityAirQualityByInvalidId() {
+    void testGetCityAirQualityByInvalidId() {
         LOG.info("Testing Getting City Air Quality by Invalid Id");
 
         String requestUrl = "https://api.weatherbit.io/v2.0/current/airquality?city_id=9999&key=c731341737c746a08ca0e6c8fc895da0";

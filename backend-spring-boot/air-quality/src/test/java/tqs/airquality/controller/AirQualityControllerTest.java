@@ -123,6 +123,17 @@ class AirQualityControllerTest {
     }
 
     @Test
+    void whenGetAirQualityByInvalidCityNameAndCountry_thenReturnNotFound() throws Exception {
+        given(service.getCityAirQualityByName("xptoAveiro", Optional.of("ES")))
+                .willReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/v1/airquality?city=xptoAveiro&country=ES"))
+                .andExpect(status().isNotFound());
+
+        verify(service, times(1)).getCityAirQualityByName("xptoAveiro", Optional.of("ES"));
+    }
+
+    @Test
     void whenGetAirQualityByInvalidCityId_thenReturnNotFound() throws Exception {
         given(service.getCityAirQualityById(99))
                 .willReturn(Optional.empty());

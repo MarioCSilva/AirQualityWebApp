@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class CityAirQuality implements Serializable {
     @JsonProperty("city_name")
     private String cityName;

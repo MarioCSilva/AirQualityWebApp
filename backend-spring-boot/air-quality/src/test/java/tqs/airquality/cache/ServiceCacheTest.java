@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tqs.airquality.model.CacheObjDetails;
+import tqs.airquality.model.CacheStats;
 
 import java.util.concurrent.TimeUnit;
 
@@ -70,5 +71,20 @@ class ServiceCacheTest {
         assertEquals(numHitsBefore, numHitsAfter);
         assertEquals(numMissesBefore + 1, numMissesAfter);
         assertEquals(numChecksBefore + 1, numChecksAfter);
+    }
+
+    @Test
+    void whenGetCacheStats_thenReturnValidCacheStats() {
+        int numHits = ServiceCache.getHits();
+        int numMisses = ServiceCache.getMisses();
+        int numChecks = ServiceCache.getTotalChecks();
+        long timeToLive = ServiceCache.getTimeToLive();
+
+        CacheStats stats = ServiceCache.getCacheStats();
+
+        assertEquals(numHits, stats.getHits());
+        assertEquals(numMisses, stats.getMisses());
+        assertEquals(numChecks, stats.getTotalChecks());
+        assertEquals(timeToLive, stats.getTimeToLive());
     }
 }
